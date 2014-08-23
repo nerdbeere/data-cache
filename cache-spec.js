@@ -50,8 +50,20 @@ describe('Cache', function() {
 		var callback = sinon.spy();
 		cache.subscribe('spaceships', 1).on('data', function() {
 			callback();
-			expect(callback.calledOnce).toBeTrue();
-			done();
+		});
+
+		var callback2 = sinon.spy();
+		cache.subscribe('spaceships').on('data', function() {
+			callback2();
+
+		}).on('subscribersNotified', function() {
+			try {
+				expect(callback).toHaveBeenCalledOnce();
+				expect(callback2).toHaveBeenCalledOnce();
+				done();
+			} catch(e) {
+				done(e);
+			}
 		});
 	});
 
@@ -74,7 +86,7 @@ describe('Cache', function() {
 		subscriber.on('data', modelSubscriberCallback);
 		subscriber.on('subscribersNotified', function() {
 			try {
-				expect(callback).not.toHaveBeenCalled();
+				expect(callback).toHaveBeenCalled();
 				expect(modelSubscriberCallback).toHaveBeenCalledOnce();
 				done();
 			} catch(e) {

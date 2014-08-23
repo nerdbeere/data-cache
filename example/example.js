@@ -25,12 +25,12 @@ cacheInstance.fill([
 
 var subscription = cacheInstance.subscribe('todos');
 
-subscription.onData(function(collection) {
+subscription.on('data', function(collection) {
 	console.log(collection);
 });
 
 var subscriptionOnModel = cacheInstance.subscribe('todos', 2);
-subscriptionOnModel.onData(function(model) {
+subscriptionOnModel.on('data', function(model) {
 	console.log(model);
 });
 

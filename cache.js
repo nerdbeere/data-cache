@@ -11,6 +11,7 @@ function Cache() {
 Cache.prototype = {
 	subscribe: function(collectionName, id) {
 		var s = new Subscription(collectionName, id);
+		var that = this;
 		this._subscriptions.push(s);
 		if(id) {
 			var model = this.getModelById(collectionName, id);
@@ -22,7 +23,7 @@ Cache.prototype = {
 		} else {
 			if(this.getCollectionLength(collectionName) > 0) {
 				asap(function() {
-					s.emit('data', this.getCollection(collectionName));
+					s.emit('data', that.getCollection(collectionName));
 				});
 			}
 		}
@@ -45,7 +46,7 @@ Cache.prototype = {
 		}, this);
 		this._callSubscribers(models);
 	},
-	getCollection: function() {
+	getCollection: function(collectionName) {
 		if(!this._cache[collectionName]) return null;
 		return this._cache[collectionName];
 	},
