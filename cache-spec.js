@@ -8,9 +8,7 @@ describe('Cache', function() {
 		cache = new Cache();
 
 		cache.registerModel('spaceship', function(data) {
-			this.type = data.type;
-			this.id = data.id;
-			this.data = data.data || {};
+
 		});
 
 		spaceship = {
@@ -93,5 +91,28 @@ describe('Cache', function() {
 				done(e);
 			}
 		});
+	});
+
+	it('should be possible to add a single model to the cache', function() {
+		cache.fill(spaceship);
+	});
+
+	it('should be possible to unregister a model', function() {
+		cache.unregisterModel();
+	});
+
+	it('should be optional to have registered models', function() {
+		cache.unregisterModel();
+		cache.fill(spaceship);
+		var model = cache.getModelById('spaceships', spaceship.id);
+		expect(model).not.toBeNull();
+		expect(model.id).toBe(1);
+	});
+
+	it('should update models when they already exist');
+
+	describe('Collection', function() {
+		it('should be a class instead of an array');
+		it('should have a method to retrieve a model');
 	});
 });

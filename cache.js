@@ -1,6 +1,9 @@
 var asap = require('asap');
+var util = require('util');
 var inflect = require('i')();
 var Subscription = require('./subscription');
+var models = require('./models');
+
 
 function Cache() {
 	this._cache = {};
@@ -34,6 +37,7 @@ Cache.prototype = {
 	},
 	fill: function(dataArr) {
 		var models = [];
+		if(!Array.isArray(dataArr)) dataArr = [dataArr];
 		dataArr.forEach(function(data) {
 			var model = this._createModel(data);
 			var collectionName = inflect.pluralize(model.type);
@@ -53,12 +57,6 @@ Cache.prototype = {
 	getCollectionLength: function(collectionName) {
 		if(!this._cache[collectionName]) return 0;
 		return this._cache[collectionName].length;
-	},
-	registerModel: function(modelName, constructor) {
-		if(this._modelRegistry[modelName]) {
-			throw 'model already exists';
-		}
-		this._modelRegistry[modelName] = constructor;
 	},
 	getModelById: function(collectionName, modelId) {
 		if(!this._cache[collectionName]) return null;
@@ -106,11 +104,28 @@ Cache.prototype = {
 				}
 		}, this);
 	},
+
+	registerModel: function(modelName, constructor) {
+		if(this._modelRegistry[modelName]) {
+			throw 'model already exists';
+		}
+		util.inherits(constructor, models.AppModel);
+		this._modelRegistry[modelName] = constructor;
+	},
+	unregisterModel: function(modelName) {
+		if(this._modelRegistry[modelName]) {
+			this._modelRegistry[modelName] = null;
+		}
+	},
 	_createModel: function(data) {
 		if(this._modelRegistry[data.type]) {
-			return new this._modelRegistry[data.type](data);
+			var newInstance = new this._modelRegistry[data.type]();
+			models.AppModel.call(newInstance, data);
+			return newInstance;
 		}
-		return null;
+		var newInstance = new models.BasicModel();
+		models.AppModel.call(newInstance, data);
+		return newInstance;
 	}
 };
 
