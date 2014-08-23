@@ -1,8 +1,8 @@
 {
   "name": "data-cache",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
-  "main": "dist/cache.min.js",
+  "main": "cache.js",
   "scripts": {
     "test": "gulp test",
     "build": "gulp build"
