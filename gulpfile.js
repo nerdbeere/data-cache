@@ -13,6 +13,7 @@ gulp.task('build', function () {
 			insertGlobals : true
 		}))
 		.pipe(uglify())
+		.pipe(rename({ extname: '.min.js' }))
 		.pipe(gulp.dest('./dist'))
 });
 
