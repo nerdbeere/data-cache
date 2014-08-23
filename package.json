@@ -1,32 +1,33 @@
 {
-	"name": "data-cache",
-	"version": "0.0.1",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"test": "gulp test",
-		"build": "gulp build"
-	},
-	"keywords": [
-		"data",
-		"cache"
-	],
-	"author": "Julian Hollmann",
-	"license": "BSD-2-Clause",
-	"devDependencies": {
-		"gulp": "~3.8.7",
-		"gulp-browserify": "~0.5.0",
-		"gulp-react": "~1.0.0",
-		"sinon": "~1.10.3",
-		"referee": "~1.0.3",
-		"gulp-mocha": "~1.0.0",
-		"gulp-watch": "~0.6.9",
-		"referee-sinon": "~1.0.2",
-		"setup-referee-sinon": "~0.2.0",
-		"gulp-rename": "~1.2.0"
-	},
-	"dependencies": {
-		"when": "~3.4.4",
-		"asap": "~1.0.0"
-	}
+  "name": "data-cache",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test",
+    "build": "gulp build"
+  },
+  "keywords": [
+    "data",
+    "cache"
+  ],
+  "author": "Julian Hollmann",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "gulp": "~3.8.7",
+    "gulp-browserify": "~0.5.0",
+    "gulp-react": "~1.0.0",
+    "sinon": "~1.10.3",
+    "referee": "~1.0.3",
+    "gulp-mocha": "~1.0.0",
+    "gulp-watch": "~0.6.9",
+    "referee-sinon": "~1.0.2",
+    "setup-referee-sinon": "~0.2.0",
+    "gulp-rename": "~1.2.0"
+  },
+  "dependencies": {
+    "when": "~3.4.4",
+    "asap": "~1.0.0",
+    "events": "~1.0.1"
+  }
 }

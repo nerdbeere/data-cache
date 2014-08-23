@@ -1,18 +1,6 @@
 var asap = require('asap');
-var on = require('on');
 var inflect = require('i')();
-
-function Subscription(collectioName, id) {
-	this.collectionName = collectioName;
-	this.id = id || null;
-	this.onData = on(this);
-}
-
-Subscription.prototype = {
-	call: function(modelOrCollection) {
-		this.onData._fire(modelOrCollection);
-	}
-};
+var Subscription = require('./subscription');
 
 function Cache() {
 	this._cache = {};
@@ -24,18 +12,23 @@ Cache.prototype = {
 	subscribe: function(collectionName, id) {
 		var s = new Subscription(collectionName, id);
 		this._subscriptions.push(s);
-		var that = this;
 		if(id) {
-			var matchingModels = [this.getModelById(collectionName, id)];
-			asap(function() {
-				that._callSubscribers(matchingModels);
-				that._callCollectionSubscribers(collectionName);
-			});
+			var model = this.getModelById(collectionName, id);
+			if(model) {
+				asap(function() {
+					s.emit('data', model);
+				});
+			}
 		} else {
-			asap(function() {
-				that._callCollectionSubscribers(collectionName);
-			});
+			if(this.getCollectionLength(collectionName) > 0) {
+				asap(function() {
+					s.emit('data', this.getCollection(collectionName));
+				});
+			}
 		}
+		asap(function() {
+			s.emit('subscribersNotified');
+		});
 		return s;
 	},
 	fill: function(dataArr) {
@@ -51,6 +44,14 @@ Cache.prototype = {
 			models.push(model);
 		}, this);
 		this._callSubscribers(models);
+	},
+	getCollection: function() {
+		if(!this._cache[collectionName]) return null;
+		return this._cache[collectionName];
+	},
+	getCollectionLength: function(collectionName) {
+		if(!this._cache[collectionName]) return 0;
+		return this._cache[collectionName].length;
 	},
 	registerModel: function(modelName, constructor) {
 		if(this._modelRegistry[modelName]) {
@@ -83,7 +84,7 @@ Cache.prototype = {
 						break;
 					}
 					if(subscription.id === models[i].id) {
-						subscription.call(models[i]);
+						subscription.emit('data', models[i]);
 						break;
 					}
 				}
@@ -92,7 +93,7 @@ Cache.prototype = {
 		for(var collectionName in collectionNames) {
 			var collection = collectionNames[collectionName];
 			collection.forEach(function(subscription) {
-				subscription.call(this._cache[collectionName]);
+				subscription.emit('data', this._cache[collectionName])
 			}, this);
 		}
 	},
@@ -100,7 +101,7 @@ Cache.prototype = {
 		this._subscriptions.forEach(function(subscription) {
 			if (!subscription || subscription.id) return;
 				if(subscription.collectionName === collectionName) {
-					subscription.call(this._cache[collectionName]);
+					subscription.emit('data', this._cache[collectionName])
 				}
 		}, this);
 	},

@@ -32,6 +32,6 @@ gulp.task('watch', function () {
 	gulp.src('*.js')
 		.pipe(watch(function(files) {
 			return gulp.src('*-spec.js', {read: false})
-				.pipe(mocha({reporter: 'spec'}));
+				.pipe(mocha({reporter: 'spec', growl: true}));
 		}));
 });
