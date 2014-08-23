@@ -3,6 +3,7 @@ var browserify = require('gulp-browserify');
 var mocha = require('gulp-mocha');
 var watch = require('gulp-watch');
 var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
 require('setup-referee-sinon');
 require('setup-referee-sinon/globals');
 
@@ -11,6 +12,7 @@ gulp.task('build', function () {
 		.pipe(browserify({
 			insertGlobals : true
 		}))
+		.pipe(uglify())
 		.pipe(gulp.dest('./dist'))
 });
 
