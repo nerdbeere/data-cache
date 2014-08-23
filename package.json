@@ -1,6 +1,6 @@
 {
   "name": "data-cache",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "cache.js",
   "scripts": {
@@ -28,6 +28,7 @@
   "dependencies": {
     "when": "~3.4.4",
     "asap": "~1.0.0",
-    "events": "~1.0.1"
+    "events": "~1.0.1",
+    "i": "~0.3.2"
   }
 }
