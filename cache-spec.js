@@ -66,6 +66,24 @@ describe('Cache', function() {
 		});
 	});
 
+	it('should be called everytime when data is filled into the cache, even ', function(done) {
+		var callback = sinon.spy();
+		cache.subscribe('spaceships').on('data', function() {
+			callback();
+		});
+
+		cache.fill([spaceship]);
+		cache.fill([spaceship]);
+		cache.fill([spaceship], function() {
+			try {
+				expect(callback).toHaveBeenCalledThrice();
+				done();
+			} catch(e) {
+				done(e);
+			}
+		});
+	});
+
 	it('should be possible to get a model from the cache by its id', function() {
 		cache.fill([spaceship]);
 		var model = cache.getModelById('spaceships', 1);

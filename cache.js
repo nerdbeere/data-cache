@@ -60,18 +60,19 @@ Cache.prototype = {
 	/**
 	 * Fill the cache with some data
 	 * @param {Array|Object} dataArr
+	 * @param {Function} cb - Callback
 	 */
-	fill: function(dataArr) {
+	fill: function(dataArr, cb) {
 		var models = [];
 		if(!Array.isArray(dataArr)) dataArr = [dataArr];
 		dataArr.forEach(function(data) {
 			var collectionName = inflect.pluralize(data.type);
 			var existingModel = this.getModelById(collectionName, data.id);
 			if(existingModel) {
+				models.push(existingModel);
 				return existingModel.setData(data);
 			}
 			var model = this._createModel(data);
-			if(!model) return;
 			if(!this.getCollection(collectionName)) {
 				this._cache[collectionName] = new Collection();
 			}
@@ -79,6 +80,7 @@ Cache.prototype = {
 			models.push(model);
 		}, this);
 		this._callSubscribers(models);
+		asap(cb);
 	},
 	/**
 	 * Get a collection by its name
