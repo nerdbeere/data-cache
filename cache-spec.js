@@ -121,8 +121,19 @@ describe('Cache', function() {
 		expect(cache.getModelById('spaceships', 1).name).toBe('andromeda');
 	});
 
+	it('should have a method to retrieve a collection', function() {
+		cache.fill(spaceship);
+		cache.getCollection('spaceships');
+	});
+
 	describe('Collection', function() {
-		it('should be a class instead of an array');
-		it('should have a method to retrieve a model');
+		it('should be a class instead of an array', function() {
+			cache.fill(spaceship);
+			refute.hasPrototype(cache.getCollection('spaceships'), Array.prototype);
+		});
+		it('should have a method to retrieve a model', function() {
+			cache.fill(spaceship);
+			expect(cache.getCollection('spaceships').getModelById(1).name).toBe('hornet');
+		});
 	});
 });
