@@ -99,7 +99,16 @@ describe('Cache', function() {
 	});
 
 	it('should be possible to unregister a model', function() {
-		cache.unregisterModel();
+		cache.unregisterModel('spaceship');
+	});
+
+	it('should be possible to add data without having a model', function() {
+		var planet = {
+			type: 'planet',
+			id: 1,
+			pos: {x: 0, y: 0}
+		};
+		cache.fill(planet);
 	});
 
 	it('should be optional to have registered models', function() {

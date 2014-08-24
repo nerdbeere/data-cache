@@ -1,3 +1,5 @@
+var util = require('util');
+
 function AppModel(data) {
 	this.setData(data);
 }
@@ -11,6 +13,7 @@ AppModel.prototype = {
 };
 
 function BasicModel() {}
+util.inherits(BasicModel, AppModel);
 
 module.exports.AppModel = AppModel;
 module.exports.BasicModel = BasicModel;
