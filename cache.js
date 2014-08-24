@@ -80,7 +80,9 @@ Cache.prototype = {
 			models.push(model);
 		}, this);
 		this._callSubscribers(models);
-		asap(cb);
+		if(cb) {
+			asap(cb);
+		}
 	},
 	/**
 	 * Get a collection by its name

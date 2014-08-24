@@ -1,6 +1,6 @@
 {
 	"name": "data-cache",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"description": "",
 	"main": "cache.js",
 	"repository": "https://github.com/nerdbeere/data-cache.git",
