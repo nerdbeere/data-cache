@@ -1,11 +1,12 @@
 {
   "name": "data-cache",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "cache.js",
   "scripts": {
     "test": "gulp test",
-    "build": "gulp build"
+    "build": "gulp build",
+    "coverage": "gulp coverage"
   },
   "keywords": [
     "data",
@@ -23,7 +24,8 @@
     "referee-sinon": "~1.0.2",
     "setup-referee-sinon": "~0.2.0",
     "gulp-rename": "~1.2.0",
-    "gulp-uglify": "~0.3.1"
+    "gulp-uglify": "~0.3.1",
+    "gulp-istanbul": "~0.2.2"
   },
   "dependencies": {
     "when": "~3.4.4",

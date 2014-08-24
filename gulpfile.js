@@ -4,8 +4,20 @@ var mocha = require('gulp-mocha');
 var watch = require('gulp-watch');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
+var istanbul = require('gulp-istanbul');
 require('setup-referee-sinon');
 require('setup-referee-sinon/globals');
+
+gulp.task('coverage', function (cb) {
+	gulp.src(['*.js', '!*-spec.js'])
+		.pipe(istanbul()) // Covering files
+		.on('finish', function () {
+			gulp.src(['*-spec.js'])
+				.pipe(mocha())
+				.pipe(istanbul.writeReports()) // Creating the reports after tests runned
+				.on('end', cb);
+		});
+});
 
 gulp.task('build', function () {
 	return gulp.src('cache.js', {read: false})
