@@ -14,6 +14,7 @@ describe('Cache', function() {
 		spaceship = {
 			type: 'spaceship',
 			id: 1,
+			name: 'hornet',
 			data: {}
 		}
 	});
@@ -109,7 +110,16 @@ describe('Cache', function() {
 		expect(model.id).toBe(1);
 	});
 
-	it('should update models when they already exist');
+	it('should update models when they already exist', function() {
+		cache.fill(spaceship);
+		spaceship.name = 'andromeda';
+		expect(cache.getModelById('spaceships', 1).name).toBe('hornet');
+		expect(cache.getModelById('spaceships', 1).name).not.toBe('andromeda');
+
+		cache.fill(spaceship);
+		expect(cache.getCollectionLength('spaceships')).toBe(1);
+		expect(cache.getModelById('spaceships', 1).name).toBe('andromeda');
+	});
 
 	describe('Collection', function() {
 		it('should be a class instead of an array');

@@ -39,8 +39,12 @@ Cache.prototype = {
 		var models = [];
 		if(!Array.isArray(dataArr)) dataArr = [dataArr];
 		dataArr.forEach(function(data) {
+			var collectionName = inflect.pluralize(data.type);
+			var existingModel = this.getModelById(collectionName, data.id);
+			if(existingModel) {
+				return existingModel.setData(data);
+			}
 			var model = this._createModel(data);
-			var collectionName = inflect.pluralize(model.type);
 			if(!model) return;
 			if(!this._cache[collectionName]) {
 				this._cache[collectionName] = [];
