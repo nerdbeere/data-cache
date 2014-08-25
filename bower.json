@@ -1,0 +1,17 @@
+{
+  "name": "data-cache",
+  "version": "0.0.8",
+  "homepage": "https://github.com/nerdbeere/data-cache",
+  "authors": [
+    "Julian Hollmann <julian.hollmann@googlemail.com>"
+  ],
+  "main": "dist/cache.min.js",
+  "license": "?",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

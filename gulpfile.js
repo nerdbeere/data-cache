@@ -22,7 +22,7 @@ gulp.task('coverage', function (cb) {
 gulp.task('build', function () {
 	return gulp.src('cache.js', {read: false})
 		.pipe(browserify({
-			insertGlobals : true
+			standalone: 'Cache'
 		}))
 		.pipe(uglify())
 		.pipe(rename({ extname: '.min.js' }))
